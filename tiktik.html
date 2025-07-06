@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Video Downloader - Download TikTok Videos Without Watermark</title>
+    <meta name="description" content="Free TikTok video downloader. Download TikTok videos without watermark in MP4 format or extract audio as MP3. Fast, secure, and easy to use.">
+    <meta name="keywords" content="tiktok downloader, download tiktok video, tiktok without watermark, tiktok to mp4, tiktok to mp3">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursite.com/">
+    <meta property="og:title" content="TikTok Video Downloader - Download TikTok Videos Without Watermark">
+    <meta property="og:description" content="Free TikTok video downloader. Download TikTok videos without watermark in MP4 format or extract audio as MP3.">
+    <meta property="og:image" content="https://yoursite.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yoursite.com/">
+    <meta property="twitter:title" content="TikTok Video Downloader - Download TikTok Videos Without Watermark">
+    <meta property="twitter:description" content="Free TikTok video downloader. Download TikTok videos without watermark in MP4 format or extract audio as MP3.">
+    <meta property="twitter:image" content="https://yoursite.com/twitter-image.jpg">
+
+    <!-- CDN Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <style>
+        /* Custom CSS for enhanced styling */
+        :root {
+            --primary-color: #ff0050;
+            --secondary-color: #000000;
+            --accent-color: #25f4ee;
+            --bg-light: #ffffff;
+            --bg-dark: #1a1a1a;
+            --text-light: #333333;
+            --text-dark: #ffffff;
+            --border-light: #e5e5e5;
+            --border-dark: #333333;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-dark);
+            --text-primary: var(--text-dark);
+            --border-primary: var(--border-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-light);
+            --text-primary: var(--text-light);
+            --border-primary: var(--border-light);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff0050 0%, #ff4081 100%);
+        }
+
+        .glassmorphism {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, var(--primary-color), #ff4081);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 0, 80, 0.3);
+        }
+
+        .url-input {
+            border: 2px solid var(--border-primary);
+            transition: all 0.3s ease;
+        }
+
+        .url-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 0, 80, 0.1);
+        }
+
+        .video-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .feature-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 0, 80, 0.1);
+        }
+
+        .adblock-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: var(--bg-primary);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .language-selector {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            padding: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .admin-panel {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .admin-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background: #e6004a;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-content {
+            min-height: 60vh;
+            padding: 2rem 0;
+        }
+
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-primary);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .video-card {
+                margin: 1rem 0;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- AdBlock Detection Modal -->
+    <div id="adblockModal" class="adblock-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAdblockModal()">&times;</span>
+            <h2 class="text-xl font-bold mb-4">AdBlock Detected</h2>
+            <p class="mb-4">We noticed you're using an ad blocker. To keep our service free, please consider disabling your ad blocker for this site.</p>
+            <button onclick="closeAdblockModal()" class="admin-btn">I Understand</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fab fa-tiktok text-2xl text-black"></i>
+                    <span class="text-xl font-bold text-black dark:text-white">TikDownloader</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" onclick="showPage('home')" class="nav-link text-gray-700 dark:text-gray-300 hover:text-pink-500">Home</a>
+                    <a href="#" onclick="showPage('blog')" class="nav-link text-gray-700 dark:text-gray-300 hover:text-pink-500">Blog</a>
+                    <a href="#" onclick="showPage('about')" class="nav-link text-gray-700 dark:text-gray-300 hover:text-pink-500">About</a>
+                    <a href="#" onclick="showPage('contact')" class="nav-link text-gray-700 dark:text-gray-300 hover:text-pink-500">Contact</a>
+                    <a href="#" onclick="showPage('faq')" class="nav-link text-gray-700 dark:text-gray-300 hover:text-pink-500">FAQ</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <select id="languageSelector" class="language-selector">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Português</option>
+                        <option value="ru">Русский</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                        <option value="zh">中文</option>
+                    </select>
+                    
+                    <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    
+                    <button onclick="showAdminPanel()" class="admin-btn text-sm">Admin</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Home Page -->
+        <div id="homePage" class="page-content">
+            <!-- Hero Section -->
+            <section class="text-center mb-12">
+                <div class="gradient-bg text-white rounded-3xl p-12 mb-8">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        Download TikTok Videos
+                    </h1>
+                    <p class="text-xl md:text-2xl opacity-90 mb-8">
+                        Free, fast, and without watermark
+                    </p>
+                    
+                    <!-- URL Input Section -->
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex flex-col md:flex-row gap-4 mb-6">
+                            <input 
+                                type="url" 
+                                id="tiktokUrl" 
+                                placeholder="Paste TikTok video URL here..."
+                                class="url-input flex-1 px-4 py-3 rounded-lg text-gray-900 text-lg"
+                                onkeypress="if(event.key==='Enter') downloadVideo()"
+                            >
+                            <button 
+                                onclick="pasteFromClipboard()" 
+                                class="bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                            >
+                                <i class="fas fa-clipboard mr-2"></i>Paste
+                            </button>
+                        </div>
+                        
+                        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                        
+                        <button 
+                            onclick="downloadVideo()" 
+                            class="download-btn w-full md:w-auto px-8 py-4 rounded-lg font-bold text-lg text-white hover:shadow-lg transition-all transform hover:scale-105"
+                        >
+                            <i class="fas fa-download mr-2"></i>Download Video
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Animation -->
+            <div id="loadingSection" class="hidden text-center mb-8">
+                <div class="loader mx-auto mb-4"></div>
+                <p class="text-lg">Processing your TikTok video...</p>
+            </div>
+
+            <!-- Video Result Section -->
+            <section id="videoResult" class="hidden mb-12">
+                <div class="video-card max-w-2xl mx-auto p-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <img id="videoThumbnail" src="" alt="Video Thumbnail" class="w-full rounded-lg">
+                        </div>
+                        <div>
+                            <h3 id="videoTitle" class="text-xl font-bold mb-2"></h3>
+                            <p id="videoUsername" class="text-gray-600 dark:text-gray-400 mb-4"></p>
+                            
+                            <div class="space-y-3">
+                                <button onclick="downloadFile('mp4-nowatermark')" class="download-btn w-full px-4 py-3 rounded-lg text-white font-semibold">
+                                    <i class="fas fa-download mr-2"></i>Download MP4 (No Watermark)
+                                </button>
+                                <button onclick="downloadFile('mp4-watermark')" class="bg-gray-600 hover:bg-gray-700 w-full px-4 py-3 rounded-lg text-white font-semibold">
+                                    <i class="fas fa-download mr-2"></i>Download MP4 (With Watermark)
+                                </button>
+                                <button onclick="downloadFile('mp3')" class="bg-green-600 hover:bg-green-700 w-full px-4 py-3 rounded-lg text-white font-semibold">
+                                    <i class="fas fa-music mr-2"></i>Download MP3 (Audio Only)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8">Why Choose Our TikTok Downloader?</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card text-center">
+                        <div class="text-4xl mb-4">
+                            <i class="fas fa-tint-slash text-pink-500"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">No Watermark</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Download TikTok videos without watermarks in high quality.</p>
+                    </div>
+                    
+                    <div class="feature-card text-center">
+                        <div class="text-4xl mb-4">
+                            <i class="fas fa-bolt text-yellow-500"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Super Fast</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Lightning-fast downloads with our optimized servers.</p>
+                    </div>
+                    
+                    <div class="feature-card text-center">
+                        <div class="text-4xl mb-4">
+                            <i class="fas fa-shield-alt text-green-500"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">100% Secure</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Your privacy is protected. No data stored on our servers.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works Section -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white font-bold text-xl">1</span>
+                        </div>
+                        <h3 class="font-bold mb-2">Copy URL</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Copy the TikTok video URL from the app</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white font-bold text-xl">2</span>
+                        </div>
+                        <h3 class="font-bold mb-2">Paste URL</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Paste the URL in our input field</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white font-bold text-xl">3</span>
+                        </div>
+                        <h3 class="font-bold mb-2">Process</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Our system processes the video</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white font-bold text-xl">4</span>
+                        </div>
+                        <h3 class="font-bold mb-2">Download</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Download your video without watermark</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Blog Page -->
+        <div id="blogPage" class="page-content hidden">
+            <h1 class="text-4xl font-bold mb-8">Blog</h1>
+            <div class="grid md:grid-cols-2 gap-8">
+                <article class="feature-card">
+                    <h2 class="text-2xl font-bold mb-4">How to Download TikTok Videos Without Watermark</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Learn the best methods to download TikTok videos without watermarks using our free tool.</p>
+                    <a href="#" class="text-pink-500 hover:text-pink-600 font-semibold">Read More →</a>
+                </article>
+                
+                <article class="feature-card">
+                    <h2 class="text-2xl font-bold mb-4">TikTok Video Formats Explained</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Understanding different video formats and which one is best for your needs.</p>
+                    <a href="#" class="text-pink-500 hover:text-pink-600 font-semibold">Read More →</a>
+                </article>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="aboutPage" class="page-content hidden">
+            <h1 class="text-4xl font-bold mb-8">About TikDownloader</h1>
+            <div class="feature-card">
+                <p class="text-lg mb-6">
+                    TikDownloader is a free online tool that allows you to download TikTok videos without watermarks. 
+                    Our mission is to provide users with a simple, fast, and secure way to save their favorite TikTok content.
+                </p>
+                <p class="text-lg mb-6">
+                    We respect creators' rights and encourage users to only download content they have permission to use. 
+                    Our service is designed to help users save videos for personal use, offline viewing, and content creation.
+                </p>
+                <p class="text-lg">
+                    Our team is committed to maintaining the highest standards of privacy and security, ensuring that your 
+                    data remains protected throughout the download process.
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contactPage" class="page-content hidden">
+            <h1 class="text-4xl font-bold mb-8">Contact Us</h1>
+            <div class="feature-card max-w-2xl mx-auto">
+                <form id="contactForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Name</label>
+                        <input type="text" name="name" class="admin-input" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" name="email" class="admin-input" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Subject</label>
+                        <input type="text" name="subject" class="admin-input" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Message</label>
+                        <textarea name="message" rows="5" class="admin-input" required></textarea>
+                    </div>
+                    <button type="submit" class="admin-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- FAQ Page -->
+        <div id="faqPage" class="page-content hidden">
+            <h1 class="text-4xl font-bold mb-8">Frequently Asked Questions</h1>
+            <div class="space-y-6">
+                <div class="feature-card">
+                    <h3 class="text-xl font-bold mb-2">Is it free to use?</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Yes, our TikTok downloader is completely free to use with no hidden charges.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-bold mb-2">Can I download videos without watermarks?</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Absolutely! Our tool specializes in downloading TikTok videos without watermarks.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-bold mb-2">What formats are supported?</h3>
+                    <p class="text-gray-600 dark:text-gray-400">We support MP4 video downloads and MP3 audio extraction.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-bold mb-2">Is it safe to use?</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Yes, our service is completely safe and secure. We don't store any of your data.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms & Conditions Page -->
+        <div id="termsPage" class="page-content hidden">
+            <h1 class="text-4xl font-bold mb-8">Terms & Conditions</h1>
+            <div class="feature-card">
+                <div class="prose max-w-none">
+                    <h2 class="text-2xl font-bold mb-4">1. Acceptance of Terms</h2>
+                    <p class="mb-4">By using our TikTok downloader service, you agree to be bound by these terms and conditions.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">2. Use of Service</h2>
+                    <p class="mb-4">Our service is provided for personal use only. You may not use our service for commercial purposes without permission.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">3. Copyright and Intellectual Property</h2>
+                    <p class="mb-4">Users are responsible for ensuring they have the right to download and use the content they access through our service.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">4. Limitation of Liability</h2>
+                    <p class="mb-4">We are not liable for any damages arising from the use of our service.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">5. Changes to Terms</h2>
+                    <p class="mb-4">We reserve the right to modify these terms at any time. Continued use of our service constitutes acceptance of modified terms.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Page -->
+        <div id="privacyPage" class="page-content hidden">
+            <h1 class="text-4xl font-bold mb-8">Privacy Policy</h1>
+            <div class="feature-card">
+                <div class="prose max-w-none">
+                    <h2 class="text-2xl font-bold mb-4">1. Information We Collect</h2>
+                    <p class="mb-4">We collect minimal information necessary to provide our service, including the TikTok URLs you submit for processing.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">2. How We Use Your Information</h2>
+                    <p class="mb-4">We use your information solely to process and provide the requested downloads. We do not store or share your personal data.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">3. Data Security</h2>
+                    <p class="mb-4">We implement appropriate security measures to protect your information during transmission and processing.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">4. Third-Party Services</h2>
+                    <p class="mb-4">We may use third-party services for analytics and security purposes. These services have their own privacy policies.</p>
+                    
+                    <h2 class="text-2xl font-bold mb-4">5. Contact Us</h2>
+                    <p class="mb-4">If you have any questions about this privacy policy, please contact us through our contact form.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="page-content hidden">
+            <h1 class="text-4xl font-bold mb-8">Admin Panel</h1>
+            
+            <!-- Admin Login -->
+            <div id="adminLogin" class="admin-panel max-w-md mx-auto">
+                <h2 class="text-2xl font-bold mb-4">Admin Login</h2>
+                <form id="adminLoginForm">
+                    <input type="text" id="adminUsername" placeholder="Username" class="admin-input" required>
+                    <input type="password" id="adminPassword" placeholder="Password" class="admin-input" required>
+                    <button type="submit" class="admin-btn w-full">Login</button>
+                </form>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="adminDashboard" class="hidden">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Site Configuration -->
+                    <div class="admin-panel">
+                        <h2 class="text-2xl font-bold mb-4">Site Configuration</h2>
+                        <form id="siteConfigForm">
+                            <label class="block text-sm font-medium mb-2">Site Title</label>
+                            <input type="text" id="siteTitle" class="admin-input" value="TikTok Video Downloader">
+                            
+                            <label class="block text-sm font-medium mb-2">Site Description</label>
+                            <textarea id="siteDescription" class="admin-input" rows="3">Free TikTok video downloader. Download TikTok videos without watermark.</textarea>
+                            
+                            <label class="block text-sm font-medium mb-2">Header Text</label>
+                            <input type="text" id="headerText" class="admin-input" value="Download TikTok Videos">
+                            
+                            <label class="block text-sm font-medium mb-2">Footer Text</label>
+                            <input type="text" id="footerText" class="admin-input" value="© 2024 TikDownloader. All rights reserved.">
+                            
+                            <button type="submit" class="admin-btn">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- API Configuration -->
+                    <div class="admin-panel">
+                        <h2 class="text-2xl font-bold mb-4">API Configuration</h2>
+                        <form id="apiConfigForm">
+                            <label class="block text-sm font-medium mb-2">TikTok API Key</label>
+                            <input type="password" id="apiKey" class="admin-input" placeholder="Enter API Key">
+                            
+                            <label class="block text-sm font-medium mb-2">API Endpoint</label>
+                            <input type="url" id="apiEndpoint" class="admin-input" placeholder="https://api.example.com/tiktok">
+                            
+                            <label class="block text-sm font-medium mb-2">reCAPTCHA Site Key</label>
+                            <input type="text" id="recaptchaSiteKey" class="admin-input" placeholder="Enter reCAPTCHA Site Key">
+                            
+                            <label class="block text-sm font-medium mb-2">reCAPTCHA Secret Key</label>
+                            <input type="password" id="recaptchaSecretKey" class="admin-input" placeholder="Enter reCAPTCHA Secret Key">
+                            
+                            <button type="submit" class="admin-btn">Save API Settings</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Analytics Panel -->
+                <div class="admin-panel mt-8">
+                    <h2 class="text-2xl font-bold mb-4">Analytics</h2>
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div class="bg-blue-500 text-white p-4 rounded-lg">
+                            <h3 class="text-lg font-bold">Total Downloads</h3>
+                            <p class="text-2xl font-bold">1,234</p>
+                        </div>
+                        <div class="bg-green-500 text-white p-4 rounded-lg">
+                            <h3 class="text-lg font-bold">Today's Downloads</h3>
+                            <p class="text-2xl font-bold">56</p>
+                        </div>
+                        <div class="bg-yellow-500 text-white p-4 rounded-lg">
+                            <h3 class="text-lg font-bold">Active Users</h3>
+                            <p class="text-2xl font-bold">89</p>
+                        </div>
+                        <div class="bg-purple-500 text-white p-4 rounded-lg">
+                            <h3 class="text-lg font-bold">Success Rate</h3>
+                            <p class="text-2xl font-bold">98%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">TikDownloader</h3>
+                    <p class="text-gray-600 dark:text-gray-400">The best free TikTok video downloader without watermarks.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showPage('home')" class="text-gray-600 dark:text-gray-400 hover:text-pink-500">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')" class="text-gray-600 dark:text-gray-400 hover:text-pink-500">About</a></li>
+                        <li><a href="#" onclick="showPage('contact')" class="text-gray-600 dark:text-gray-400 hover:text-pink-500">Contact</a></li>
+                        <li><a href="#" onclick="showPage('faq')" class="text-gray-600 dark:text-gray-400 hover:text-pink-500">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showPage('terms')" class="text-gray-600 dark:text-gray-400 hover:text-pink-500">Terms & Conditions</a></li>
+                        <li><a href="#" onclick="showPage('privacy')" class="text-gray-600 dark:text-gray-400 hover:text-pink-500">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl text-gray-600 dark:text-gray-400 hover:text-pink-500">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-2xl text-gray-600 dark:text-gray-400 hover:text-pink-500">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-2xl text-gray-600 dark:text-gray-400 hover:text-pink-500">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-2xl text-gray-600 dark:text-gray-400 hover:text-pink-500">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-600 dark:text-gray-400">© 2024 TikDownloader. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentPage = 'home';
+        let videoData = null;
+        let isAdminLoggedIn = false;
+        
+        // Language translations
+        const translations = {
+            en: {
+                title: "Download TikTok Videos",
+                subtitle: "Free, fast, and without watermark",
+                placeholder: "Paste TikTok video URL here...",
+                downloadBtn: "Download Video",
+                pasteBtn: "Paste"
+            },
+            es: {
+                title: "Descargar Videos de TikTok",
+                subtitle: "Gratis, rápido y sin marca de agua",
+                placeholder: "Pega aquí la URL del video de TikTok...",
+                downloadBtn: "Descargar Video",
+                pasteBtn: "Pegar"
+            },
+            fr: {
+                title: "Télécharger des Vidéos TikTok",
+                subtitle: "Gratuit, rapide et sans filigrane",
+                placeholder: "Collez l'URL de la vidéo TikTok ici...",
+                downloadBtn: "Télécharger la Vidéo",
+                pasteBtn: "Coller"
+            }
+        };
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            detectAdBlock();
+            setupEventListeners();
+        });
+
+        function initializeApp() {
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+            
+            // Load saved language
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            setLanguage(savedLanguage);
+            document.getElementById('languageSelector').value = savedLanguage;
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Language selector
+            document.getElementById('languageSelector').addEventListener('change', function() {
+                setLanguage(this.value);
+            });
+            
+            // Admin login form
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                adminLogin();
+            });
+            
+            // Site config form
+            document.getElementById('siteConfigForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveSiteConfig();
+            });
+            
+            // API config form
+            document.getElementById('apiConfigForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveApiConfig();
+            });
+            
+            // Contact form
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitContactForm();
+            });
+        }
+
+        // Theme functions
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // Update icon
+            const moonIcon = document.querySelector('#themeToggle .fa-moon');
+            const sunIcon = document.querySelector('#themeToggle .fa-sun');
+            
+            if (theme === 'dark') {
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            } else {
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            }
+        }
+
+        // Language functions
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            const translation = translations[lang] || translations.en;
+            
+            // Update text content
+            document.querySelector('.gradient-bg h1').textContent = translation.title;
+            document.querySelector('.gradient-bg p').textContent = translation.subtitle;
+            document.getElementById('tiktokUrl').placeholder = translation.placeholder;
+            document.querySelector('.download-btn').innerHTML = `<i class="fas fa-download mr-2"></i>${translation.downloadBtn}`;
+            document.querySelector('[onclick="pasteFromClipboard()"]').innerHTML = `<i class="fas fa-clipboard mr-2"></i>${translation.pasteBtn}`;
+        }
+
+        // Page navigation
+        function showPage(page) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            
+            // Show selected page
+            const pageElement = document.getElementById(page + 'Page');
+            if (pageElement) {
+                pageElement.classList.remove('hidden');
+                pageElement.classList.add('fade-in');
+                currentPage = page;
+            }
+        }
+
+        // Clipboard functions
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text && text.includes('tiktok.com')) {
+                    document.getElementById('tiktokUrl').value = text;
+                    document.getElementById('tiktokUrl').focus();
+                } else {
+                    alert('Please copy a valid TikTok URL first');
+                }
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+                alert('Please paste the TikTok URL manually');
+            }
+        }
+
+        // Video download functions
+        async function downloadVideo() {
+            const url = document.getElementById('tiktokUrl').value.trim();
+            
+            if (!url) {
+                alert('Please enter a TikTok URL');
+                return;
+            }
+            
+            if (!isValidTikTokUrl(url)) {
+                alert('Please enter a valid TikTok URL');
+                return;
+            }
+            
+            // Check reCAPTCHA
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                alert('Please complete the reCAPTCHA verification');
+                return;
+            }
+            
+            showLoader();
+            
+            try {
+                // Simulate API call (replace with actual PHP backend)
+                const response = await fetchVideoData(url);
+                
+                if (response.success) {
+                    displayVideoResult(response.data);
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('An error occurred while processing your request');
+            } finally {
+                hideLoader();
+            }
+        }
+
+        function isValidTikTokUrl(url) {
+            const tiktokRegex = /^https?:\/\/(www\.)?(tiktok\.com|vm\.tiktok\.com)/;
+            return tiktokRegex.test(url);
+        }
+
+        async function fetchVideoData(url) {
+            // This would be replaced with actual PHP backend call
+            // For demo purposes, returning mock data
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        success: true,
+                        data: {
+                            title: "Amazing TikTok Video",
+                            username: "@tiktoker123",
+                            thumbnail: "https://via.placeholder.com/300x400/ff0050/ffffff?text=TikTok",
+                            downloadUrls: {
+                                mp4NoWatermark: "https://example.com/video-nowatermark.mp4",
+                                mp4Watermark: "https://example.com/video-watermark.mp4",
+                                mp3: "https://example.com/audio.mp3"
+                            }
+                        }
+                    });
+                }, 2000);
+            });
+        }
+
+        function showLoader() {
+            document.getElementById('loadingSection').classList.remove('hidden');
+            document.getElementById('videoResult').classList.add('hidden');
+        }
+
+        function hideLoader() {
+            document.getElementById('loadingSection').classList.add('hidden');
+        }
+
+        function displayVideoResult(data) {
+            videoData = data;
+            
+            document.getElementById('videoThumbnail').src = data.thumbnail;
+            document.getElementById('videoTitle').textContent = data.title;
+            document.getElementById('videoUsername').textContent = data.username;
+            
+            document.getElementById('videoResult').classList.remove('hidden');
+            document.getElementById('videoResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function downloadFile(format) {
+            if (!videoData) return;
+            
+            let downloadUrl;
+            switch (format) {
+                case 'mp4-nowatermark':
+                    downloadUrl = videoData.downloadUrls.mp4NoWatermark;
+                    break;
+                case 'mp4-watermark':
+                    downloadUrl = videoData.downloadUrls.mp4Watermark;
+                    break;
+                case 'mp3':
+                    downloadUrl = videoData.downloadUrls.mp3;
+                    break;
+                default:
+                    return;
+            }
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = `tiktok-video-${format}.${format.includes('mp3') ? 'mp3' : 'mp4'}`;
+            link.target = '_blank';
+            link.click();
+        }
+
+        // Admin functions
+        function showAdminPanel() {
+            showPage('admin');
+        }
+
+        function adminLogin() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            // Simple authentication (replace with secure backend authentication)
+            if (username === 'admin' && password === 'password123') {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                alert('Login successful!');
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        function saveSiteConfig() {
+            const config = {
+                title: document.getElementById('siteTitle').value,
+                description: document.getElementById('siteDescription').value,
+                headerText: document.getElementById('headerText').value,
+                footerText: document.getElementById('footerText').value
+            };
+            
+            // Save to localStorage (replace with PHP backend)
+            localStorage.setItem('siteConfig', JSON.stringify(config));
+            alert('Site configuration saved successfully!');
+        }
+
+        function saveApiConfig() {
+            const config = {
+                apiKey: document.getElementById('apiKey').value,
+                apiEndpoint: document.getElementById('apiEndpoint').value,
+                recaptchaSiteKey: document.getElementById('recaptchaSiteKey').value,
+                recaptchaSecretKey: document.getElementById('recaptchaSecretKey').value
+            };
+            
+            // Save to localStorage (replace with PHP backend)
+            localStorage.setItem('apiConfig', JSON.stringify(config));
+            alert('API configuration saved successfully!');
+        }
+
+        function submitContactForm() {
+            const formData = new FormData(document.getElementById('contactForm'));
+            const data = Object.fromEntries(formData);
+            
+            // Here you would send the data to your PHP backend
+            console.log('Contact form data:', data);
+            alert('Thank you for your message! We will get back to you soon.');
+            document.getElementById('contactForm').reset();
+        }
+
+        // AdBlock detection
+        function detectAdBlock() {
+            const testAd = document.createElement('div');
+            testAd.innerHTML = '&nbsp;';
+            testAd.className = 'adsbox';
+            testAd.style.position = 'absolute';
+            testAd.style.left = '-10000px';
+            testAd.style.top = '-1000px';
+            testAd.style.width = '1px';
+            testAd.style.height = '1px';
+            
+            document.body.appendChild(testAd);
+            
+            setTimeout(() => {
+                if (testAd.offsetHeight === 0) {
+                    showAdblockModal();
+                }
+                document.body.removeChild(testAd);
+            }, 100);
+        }
+
+        function showAdblockModal() {
+            document.getElementById('adblockModal').style.display = 'block';
+        }
+
+        function closeAdblockModal() {
+            document.getElementById('adblockModal').style.display = 'none';
+        }
+
+        // Utility functions
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white ${type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // SEO and Analytics
+        function trackEvent(eventName, eventData) {
+            // Track events for analytics
+            console.log('Event tracked:', eventName, eventData);
+            
+            // Here you would send data to your analytics service
+            // Example: Google Analytics, Mixpanel, etc.
+        }
+
+        // Progressive Web App features
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed');
+                    });
+            });
+        }
+    </script>
+
+    <!-- PHP Backend Code (This would be in separate PHP files) -->
+    <!--
+    <?php
+    // config.php
+    $config = [
+        'api_key' => 'your_tiktok_api_key',
+        'api_endpoint' => 'https://api.tiktok.com/v1/',
+        'recaptcha_site_key' => 'your_recaptcha_site_key',
+        'recaptcha_secret_key' => 'your_recaptcha_secret_key',
+        'site_title' => 'TikTok Video Downloader',
+        'site_description' => 'Free TikTok video downloader without watermark'
+    ];
+
+    // download.php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $url = $_POST['url'];
+        $recaptcha_response = $_POST['g-recaptcha-response'];
+        
+        // Verify reCAPTCHA
+        $verify_url = "https://www.google.com/recaptcha/api/siteverify";
+        $response = file_get_contents($verify_url . "?secret=" . $config['recaptcha_secret_key'] . "&response=" . $recaptcha_response);
+        $response_data = json_decode($response);
+        
+        if (!$response_data->success) {
+            echo json_encode(['success' => false, 'message' => 'reCAPTCHA verification failed']);
+            exit;
+        }
+        
+        // Process TikTok URL
+        $api_url = $config['api_endpoint'] . 'download?url=' . urlencode($url);
+        $headers = [
+            'Authorization: Bearer ' . $config['api_key'],
+            'Content-Type: application/json'
+        ];
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $api_url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($http_code === 200) {
+            echo $response;
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to process video']);
+        }
+    }
+
+    // admin.php
+    session_start();
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['action'])) {
+            switch ($_POST['action']) {
+                case 'login':
+                    if ($_POST['username'] === 'admin' && $_POST['password'] === 'password123') {
+                        $_SESSION['admin_logged_in'] = true;
+                        echo json_encode(['success' => true]);
+                    } else {
+                        echo json_encode(['success' => false, 'message' => 'Invalid credentials']);
+                    }
+                    break;
+                
+                case 'save_config':
+                    if ($_SESSION['admin_logged_in']) {
+                        $config_data = $_POST['config'];
+                        file_put_contents('config.json', json_encode($config_data));
+                        echo json_encode(['success' => true]);
+                    }
+                    break;
+            }
+        }
+    }
+    ?>
+    -->
+</body>
+</html>
